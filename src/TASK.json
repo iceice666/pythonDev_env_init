@@ -1,0 +1,139 @@
+
+{
+
+    "version": "2.0.0",
+    "presentation": {
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+    },
+    "tasks": [
+        {
+            "label": " Install pyinstaller",
+            "type": "shell",
+            "command": "pip install pyinstaller",
+            "presentation": {
+                "group": "Init"
+            }
+        },
+        {
+            "label": " Update pyinstaller",
+            "type": "shell",
+            "command": "pip install pyinstaller -U",
+            "presentation": {
+                "group": "Init"
+            }
+        },
+        {
+            "label": " Uninstall pyinstaller",
+            "type": "shell",
+            "command": "pip uninstall pyinstaller",
+            "presentation": {
+                "group": "Init"
+            }
+        },
+
+        {
+            "label": "Build (onefile, windowed)",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
+                "${input:main}",
+                "@{icon}",
+                "--name",
+                "@{name}",
+                "--specpath",
+                "${workspaceFolder}\\\\spec",
+                "--distpath",
+                "@{name}_Build",
+                "--windowed",
+                "--onefile",
+                "--clean",
+                "${input:moreOpts}"
+            ],
+            "presentation": {
+                "group": "Build"
+            }
+        },
+        {
+            "label": "Pack (onedir, windowed)",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
+                "${input:main}",
+                "@{icon}",
+                "--name",
+                "@{name}",
+                "--specpath",
+                "${workspaceFolder}\\\\spec",
+                "--distpath",
+                "@{name}_Pack",
+                "--windowed",
+                "--onedir",
+                "--clean",
+                "${input:moreOpts}"
+            ],
+            "presentation": {
+                "group": "Build"
+            }
+        },
+        {
+            "label": "Debug (onefile, console)",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
+                "${input:main}",
+                "@{icon}",
+                "--name",
+                "@{name}",
+                "--specpath",
+                "${workspaceFolder}\\\\spec",
+                "--distpath",
+                "@{name}_Debug",
+                "--console",
+                "--onefile",
+                "--clean",
+                "${input:moreOpts}"
+            ],
+            "presentation": {
+                "group": "Build"
+            }
+        },
+        {
+            "label": "Spec (build with .spec file)",
+            "type": "shell",
+            "command": "pyinstaller",
+            "args": [
+                "${input:specPath}"
+            ],
+            "presentation": {
+                "group": "Build"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "main",
+            "type": "pickString",
+            "description": "Pyinstaller entry point",
+            "default": "main.py",
+            "options": [
+                "src\\\\main.py",
+                "${file}"
+            ]
+        },
+        {
+            "id": "moreOpts",
+            "type": "promptString",
+            "description": "Need more opts? (Press enter for no opts)",
+            "default": ""
+        },
+        {
+            "id": "specPath",
+            "type": "promptString",
+            "description": "Spec file path",
+            "default": "${workspaceFolder}\\\\spec\\\\@{name}.spec"
+        }
+    ]
+}
+
